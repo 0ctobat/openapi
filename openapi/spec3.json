@@ -3,7 +3,12 @@
   "info" : {
     "version" : "2.0.0",
     "title" : "Octobat API",
-    "description" : "Octobat API Reference"
+    "description" : "Octobat API Reference",
+    "x-logo" : {
+      "url" : "http://v2apidoc.octobat.com/images/logo_api.png",
+      "altText" : "OCTOBAT LOGO API",
+      "backgroundColor" : "#FFFFFF"
+    }
   },
   "servers" : [
     {
