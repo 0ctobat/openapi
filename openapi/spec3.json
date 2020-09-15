@@ -10799,7 +10799,8 @@
         "TaxEvidences",
         "TaxIds",
         "TaxIdValidations",
-        "TaxRegionSettings"
+        "TaxRegionSettings",
+        "Warehouses"
       ]
     },
     {
