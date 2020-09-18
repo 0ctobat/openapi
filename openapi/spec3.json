@@ -10830,13 +10830,6 @@
         "Capabilities",
         "CountrySpecs"
       ]
-    },
-    {
-      "name" : "Reporting",
-      "tags" : [
-        "ReportRuns",
-        "ReportTypes"
-      ]
     }
   ]
 }
