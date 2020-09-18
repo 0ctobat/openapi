@@ -1317,7 +1317,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nGET https://apiv2.octobat.com/invoices/:invoice_id/items\nGET https://apiv2.octobat.com/credit_notes/:credit_note_id/items\n\n# Example request\n$ curl https://apiv2.octobat.com/invoices/oc_in_xxxxxx/items \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt:\n\n$ curl https://apiv2.octobat.com/credit_notes/oc_cn_xxxxxx/items \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt:"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\ninvoice = Octobat::Invoice.retrieve( \"oc_in_xxxxx\" )\nitems = invoice.items.list( { limit: 3 } )"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.listItems(\n  \"oc_in_xxxxx\",\n  {\n    limit: 3,\n  }\n).then(function(items) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice=\\Octobat\\Invoice::retrieve([\n  \"id\" => \"oc_in_xxxxx\",\n  \"expand\" => [ 'items' ]\n])\n$items = $invoice->items->list( [ 'limit' => 3 ] );"
+          }
+        ]
       },
       "post" : {
         "summary" : "Create an item",
@@ -1485,7 +1503,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nPOST https://apiv2.octobat.com/invoices/:invoice_id/items\nPOST https://apiv2.octobat.com/invoices/:credit_note_id/items\n\n# Example request (with tax evidence and unit tax exclusive scheme)\n$ curl -X POST https://apiv2.octobat.com/invoices/oc_in_xxxxx/items \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt: \\\n-d currency=EUR \\\n-d description='Item description' \\\n-d unit_extratax_amount=1000 \\\n-d tax_evidence=oc_tev_xxxxxxx\n\n# Example request (without tax evidence, and tax-inclusive scheme)\n$ curl -X POST https://apiv2.octobat.com/invoices/oc_in_xxxxx/items \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt: \\\n-d currency=EUR \\\n-d description='Item description' \\\n-d gross_amount=1200 \\\n-d tax=eu-vat\n-d tax_rate=20"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\ninvoice = Octobat::Invoice.retrieve( \"oc_in_xxxxx\" )\n\n# Item with tax evidence, and tax-exclusive scheme\nitem = invoice.items.create( {\n  currency: 'EUR',\n  description: 'Item Description',\n  unit_extratax_amount: 1000,\n  tax_evidence: 'oc_tev_xxxxxxx'\n} )\n\n# Item without tax evidence, and tax-inclusive scheme\nitem = invoice.items.create( {\n  currency: 'EUR',\n  description: 'Item Description',\n  gross_amount: 1200,\n  tax: 'eu-vat',\n  tax_rate: 20.0\n} )"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\n\n// Item with tax evidence, and tax-exclusive scheme\noctobat.invoices.createItem(\n  \"oc_in_xxxxx\",\n  {\n    currency: 'EUR',\n    description: 'Item description',\n    unit_extratax_amount: 1000,\n    tax_evidence: \"oc_tev_xxxxxxx\"\n  }\n}).then(function(item) { // ... })\n\n// Item without tax evidence, and tax-inclusive scheme\noctobat.invoices.createItem(\n  \"oc_in_xxxxx\",\n  {\n    currency: 'EUR',\n    description: 'Item description',\n    gross_amount: 1200,\n    tax: \"eu-vat\",\n    tax_rate: 20.0\n  }\n}).then(function(item) { // ... })"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice=\\Octobat\\Invoice::retrieve([\n  \"id\" => \"oc_in_xxxxx\",\n  \"expand\" => [ 'items' ]\n])\n\n// Item with tax evidence, and tax-exclusive scheme\n$item = $invoice->items->create( [\n  'currency' => 'EUR',\n  'description' => 'Item Description',\n  'unit_extratax_amount' => 1000,\n  'tax_evidence' => 'oc_tev_xxxxxxx'\n] );\n\n// Item without tax evidence, and tax-inclusive scheme\n$item = $invoice->items->create( [\n  'currency' => 'EUR',\n  'description' => 'Item Description',\n  'gross_amount' => 1200,\n  'tax' => 'eu-vat',\n  'tax_rate' => 20.0\n] );"
+          }
+        ]
       }
     },
     "/credit_notes/{credit_note_id}/items/{id}" : {
@@ -1540,7 +1576,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nGET https://apiv2.octobat.com/invoices/:invoice_id/items/:id\nGET https://apiv2.octobat.com/credit_notes/:credit_note_id/items/:id\n\n# Example request\n$ curl https://apiv2.octobat.com/invoices/oc_in_xxxxxx/items/oc_it_yyyyyyyy \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt:\n\n$ curl https://apiv2.octobat.com/credit_notes/oc_cn_xxxxxx/items/oc_it_yyyyyyyy \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt:"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\ninvoice = Octobat::Invoice.retrieve( \"oc_in_xxxxx\" )\nitems = invoice.items.retrieve( \"oc_it_yyyyyyyy\" )"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.retrieveItem(\"oc_in_xxxxxxx\", \"oc_it_yyyyyyyy\").then(function(item) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice=\\Octobat\\Invoice::retrieve([\n  \"id\" => \"oc_in_xxxxx\",\n  \"expand\" => [ 'items' ]\n])\n$items = $invoice->items->retrieve( 'oc_it_yyyyyyyy' );"
+          }
+        ]
       },
       "patch" : {
         "summary" : "Update a draft item",
@@ -2069,7 +2123,7 @@
           },
           {
             "lang" : "ruby",
-            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\nOctobat::Customer.all( { limit: 3} )"
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\nOctobat::Customer.list( { limit: 3} )"
           },
           {
             "lang" : "node",
@@ -3063,7 +3117,7 @@
           },
           {
             "lang" : "ruby",
-            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\ninvoices = Octobat::Invoice.all( { limit: 3} )"
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\ninvoices = Octobat::Invoice.list( { limit: 3} )"
           },
           {
             "lang" : "node",
@@ -3773,7 +3827,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nGET https://apiv2.octobat.com/invoices/:invoice_id/items\nGET https://apiv2.octobat.com/credit_notes/:credit_note_id/items\n\n# Example request\n$ curl https://apiv2.octobat.com/invoices/oc_in_xxxxxx/items \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt:\n\n$ curl https://apiv2.octobat.com/credit_notes/oc_cn_xxxxxx/items \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt:"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\ninvoice = Octobat::Invoice.retrieve( \"oc_in_xxxxx\" )\nitems = invoice.items.list( { limit: 3 } )"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.listItems(\n  \"oc_in_xxxxx\",\n  {\n    limit: 3,\n  }\n).then(function(items) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice=\\Octobat\\Invoice::retrieve([\n  \"id\" => \"oc_in_xxxxx\",\n  \"expand\" => [ 'items' ]\n])\n$items = $invoice->items->list( [ 'limit' => 3 ] );"
+          }
+        ]
       },
       "post" : {
         "summary" : "Create an item",
@@ -3941,7 +4013,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nPOST https://apiv2.octobat.com/invoices/:invoice_id/items\nPOST https://apiv2.octobat.com/invoices/:credit_note_id/items\n\n# Example request (with tax evidence and unit tax exclusive scheme)\n$ curl -X POST https://apiv2.octobat.com/invoices/oc_in_xxxxx/items \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt: \\\n-d currency=EUR \\\n-d description='Item description' \\\n-d unit_extratax_amount=1000 \\\n-d tax_evidence=oc_tev_xxxxxxx\n\n# Example request (without tax evidence, and tax-inclusive scheme)\n$ curl -X POST https://apiv2.octobat.com/invoices/oc_in_xxxxx/items \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt: \\\n-d currency=EUR \\\n-d description='Item description' \\\n-d gross_amount=1200 \\\n-d tax=eu-vat\n-d tax_rate=20"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\ninvoice = Octobat::Invoice.retrieve( \"oc_in_xxxxx\" )\n\n# Item with tax evidence, and tax-exclusive scheme\nitem = invoice.items.create( {\n  currency: 'EUR',\n  description: 'Item Description',\n  unit_extratax_amount: 1000,\n  tax_evidence: 'oc_tev_xxxxxxx'\n} )\n\n# Item without tax evidence, and tax-inclusive scheme\nitem = invoice.items.create( {\n  currency: 'EUR',\n  description: 'Item Description',\n  gross_amount: 1200,\n  tax: 'eu-vat',\n  tax_rate: 20.0\n} )"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\n\n// Item with tax evidence, and tax-exclusive scheme\noctobat.invoices.createItem(\n  \"oc_in_xxxxx\",\n  {\n    currency: 'EUR',\n    description: 'Item description',\n    unit_extratax_amount: 1000,\n    tax_evidence: \"oc_tev_xxxxxxx\"\n  }\n}).then(function(item) { // ... })\n\n// Item without tax evidence, and tax-inclusive scheme\noctobat.invoices.createItem(\n  \"oc_in_xxxxx\",\n  {\n    currency: 'EUR',\n    description: 'Item description',\n    gross_amount: 1200,\n    tax: \"eu-vat\",\n    tax_rate: 20.0\n  }\n}).then(function(item) { // ... })"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice=\\Octobat\\Invoice::retrieve([\n  \"id\" => \"oc_in_xxxxx\",\n  \"expand\" => [ 'items' ]\n])\n\n// Item with tax evidence, and tax-exclusive scheme\n$item = $invoice->items->create( [\n  'currency' => 'EUR',\n  'description' => 'Item Description',\n  'unit_extratax_amount' => 1000,\n  'tax_evidence' => 'oc_tev_xxxxxxx'\n] );\n\n// Item without tax evidence, and tax-inclusive scheme\n$item = $invoice->items->create( [\n  'currency' => 'EUR',\n  'description' => 'Item Description',\n  'gross_amount' => 1200,\n  'tax' => 'eu-vat',\n  'tax_rate' => 20.0\n] );"
+          }
+        ]
       }
     },
     "/invoices/{invoice_id}/items/{id}" : {
@@ -3996,7 +4086,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nGET https://apiv2.octobat.com/invoices/:invoice_id/items/:id\nGET https://apiv2.octobat.com/credit_notes/:credit_note_id/items/:id\n\n# Example request\n$ curl https://apiv2.octobat.com/invoices/oc_in_xxxxxx/items/oc_it_yyyyyyyy \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt:\n\n$ curl https://apiv2.octobat.com/credit_notes/oc_cn_xxxxxx/items/oc_it_yyyyyyyy \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt:"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\ninvoice = Octobat::Invoice.retrieve( \"oc_in_xxxxx\" )\nitems = invoice.items.retrieve( \"oc_it_yyyyyyyy\" )"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.retrieveItem(\"oc_in_xxxxxxx\", \"oc_it_yyyyyyyy\").then(function(item) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice=\\Octobat\\Invoice::retrieve([\n  \"id\" => \"oc_in_xxxxx\",\n  \"expand\" => [ 'items' ]\n])\n$items = $invoice->items->retrieve( 'oc_it_yyyyyyyy' );"
+          }
+        ]
       },
       "patch" : {
         "summary" : "Update a draft item",
