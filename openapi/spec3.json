@@ -1386,7 +1386,7 @@
                     "description" : "An arbitrary string attached to the object. Often useful for displaying to users."
                   },
                   "discountable" : {
-                    "type" : "string",
+                    "type" : "boolean",
                     "description" : "If true, discounts will apply to this invoice item. Always false for prorations."
                   },
                   "extratax_amount" : {
@@ -3896,7 +3896,7 @@
                     "description" : "An arbitrary string attached to the object. Often useful for displaying to users."
                   },
                   "discountable" : {
-                    "type" : "string",
+                    "type" : "boolean",
                     "description" : "If true, discounts will apply to this invoice item. Always false for prorations."
                   },
                   "extratax_amount" : {
@@ -8739,7 +8739,7 @@
             "description" : "An arbitrary string attached to the object. Often useful for displaying to users."
           },
           "discountable" : {
-            "type" : "string",
+            "type" : "boolean",
             "description" : "If true, discounts will apply to this invoice item. Always false for prorations."
           },
           "extratax_amount" : {
