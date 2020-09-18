@@ -3055,7 +3055,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nGET https://apiv2.octobat.com/invoices/\n\n# Example request\n$ curl https://apiv2.octobat.com/invoices \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt:"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\ninvoices = Octobat::Invoice.all( { limit: 3} )"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.list({\n  limit: 3,\n}).then(function(invoices) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoices = \\Octobat\\Invoice::all(['limit' => 3]);"
+          }
+        ]
       },
       "post" : {
         "summary" : "Create an invoice",
@@ -3186,7 +3204,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nPOST https://apiv2.octobat.com/invoices\n\n# Example request\n$ curl -X POST https://apiv2.octobat.com/invoices \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt: \\\n-d customer=oc_cu_xxxxxxxx \\\n-d currency=EUR \\\n-d description=Freelancing Invoice"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\n\ninvoice = Octobat::Invoice.create( {\n  customer: 'oc_cu_xxxxxxxx',\n  currency: 'EUR'\n} )"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.create({\n  customer: \"oc_cu_xxxxxxxx\",\n  currency: \"EUR\"\n}).then(function(invoice) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice = \\Octobat\\Invoice::create([\n  'customer' => 'oc_cu_xxxxxxxx',\n  'currency' => 'EUR'\n]);"
+          }
+        ]
       }
     },
     "/invoices/{id}" : {
@@ -3221,7 +3257,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nGET https://apiv2.octobat.com/invoices/:id\n\n# Example request\n$ curl https://apiv2.octobat.com/invoices/oc_in_xxxxxxxx \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt:"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\n\ninvoice = Octobat::Invoice.retrieve(\"oc_in_xxxxxxxx\")"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.retrieve({\n  \"oc_in_xxxxxxxx\"\n}).then(function(invoice) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice = \\Octobat\\Invoice::retrieve(\"oc_in_xxxxxxxx\");"
+          }
+        ]
       },
       "patch" : {
         "summary" : "Update a draft invoice",
@@ -3284,7 +3338,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nPATCH https://apiv2.octobat.com/invoices/:id\n\n# Example request\n$ curl -X PATCH https://apiv2.octobat.com/invoices/oc_in_xxxxxxxx \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt: \\\n-d \"metadata[order_id]\"=6735"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\n\ninvoice = Octobat::Invoice.retrieve(\"oc_in_xxxxxxxx\")\ninvoice.metadata = { order_id: '1042'}\ninvoice.save"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.update(\n  \"oc_in_xxxxxxxx\",\n  {\n    metadata: { order_id: '1042' }\n  }\n).then(function(invoice) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice = \\Octobat\\Invoice::update(\n  \"oc_in_xxxxxxxx\",\n  [\n    'metadata' => [ 'order_id' => '1042' ]\n  ]\n);"
+          }
+        ]
       },
       "put" : {
         "summary" : "Update a draft invoice",
@@ -3347,7 +3419,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nPATCH https://apiv2.octobat.com/invoices/:id\n\n# Example request\n$ curl -X PATCH https://apiv2.octobat.com/invoices/oc_in_xxxxxxxx \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt: \\\n-d \"metadata[order_id]\"=6735"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\n\ninvoice = Octobat::Invoice.retrieve(\"oc_in_xxxxxxxx\")\ninvoice.metadata = { order_id: '1042'}\ninvoice.save"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.update(\n  \"oc_in_xxxxxxxx\",\n  {\n    metadata: { order_id: '1042' }\n  }\n).then(function(invoice) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice = \\Octobat\\Invoice::update(\n  \"oc_in_xxxxxxxx\",\n  [\n    'metadata' => [ 'order_id' => '1042' ]\n  ]\n);"
+          }
+        ]
       },
       "delete" : {
         "summary" : "Delete a draft Invoice",
@@ -3380,7 +3470,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nDELETE https://apiv2.octobat.com/invoices/:id\n\n# Example request\n$ curl -X DELETE https://apiv2.octobat.com/invoices/oc_in_xxxxxxxx \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt: \\"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\n\ninvoice = Octobat::Invoice.retrieve(\"oc_in_xxxxxxxx\")\ninvoice.delete"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.delete(\"oc_in_xxxxxxxx\").then(function(invoice) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice = \\Octobat\\Invoice::delete(\"oc_in_xxxxxxxx\");"
+          }
+        ]
       }
     },
     "/invoices/{id}/cancel" : {
@@ -3415,7 +3523,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nPATCH https://apiv2.octobat.com/invoices/:id/cancel\n\n# Example request\n$ curl -X PATCH https://apiv2.octobat.com/invoices/oc_in_xxxxxxxx/cancel \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt: \\"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\n\ninvoice = Octobat::Invoice.retrieve(\"oc_in_xxxxxxxx\")\ninvoice.cancel"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.cancel(\"oc_in_xxxxxxxx\").then(function(invoice) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice = \\Octobat\\Invoice::cancel(\"oc_in_xxxxxxxx\");"
+          }
+        ]
       }
     },
     "/invoices/{id}/cancel_and_replace" : {
@@ -3450,7 +3576,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nPATCH https://apiv2.octobat.com/invoices/:id/cancel_and_replace\n\n# Example request\n$ curl -X PATCH https://apiv2.octobat.com/invoices/oc_in_xxxxxxxx/cancel_and_replace \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt: \\"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\n\ninvoice = Octobat::Invoice.retrieve(\"oc_in_xxxxxxxx\")\ninvoice.cancel_and_replace"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.cancelAndReplace(\"oc_in_xxxxxxxx\").then(function(invoice) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice = \\Octobat\\Invoice::cancel_and_replace(\"oc_in_xxxxxxxx\");"
+          }
+        ]
       }
     },
     "/invoices/{id}/confirm" : {
@@ -3485,7 +3629,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nPATCH https://apiv2.octobat.com/invoices/:id/confirm\n\n# Example request\n$ curl -X PATCH https://apiv2.octobat.com/invoices/oc_in_xxxxxxxx/confirm \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt: \\"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\n\ninvoice = Octobat::Invoice.retrieve(\"oc_in_xxxxxxxx\")\ninvoice.confirm"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.confirm(\"oc_in_xxxxxxxx\").then(function(invoice) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice = \\Octobat\\Invoice::confirm(\"oc_in_xxxxxxxx\");"
+          }
+        ]
       }
     },
     "/invoices/{id}/send" : {
@@ -3520,7 +3682,25 @@
           "default" : {
             "$ref" : "#/components/responses/ErrorResponse"
           }
-        }
+        },
+        "x-code-samples" : [
+          {
+            "lang" : "curl",
+            "source" : "# Definition\nPOST https://apiv2.octobat.com/invoices/:id/send\n\n# Example request\n$ curl -X POST https://apiv2.octobat.com/invoices/:id/send \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt: \\"
+          },
+          {
+            "lang" : "ruby",
+            "source" : "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\n\ninvoice = Octobat::Invoice.retrieve(\"oc_in_xxxxxxxx\")\ninvoice.send_by_email"
+          },
+          {
+            "lang" : "node",
+            "source" : "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.invoices.sendByEmail(\"oc_in_xxxxxxxx\").then(function(invoice) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
+          },
+          {
+            "lang" : "php",
+            "source" : "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice = \\Octobat\\Invoice::send_by_email(\"oc_in_xxxxxxxx\");"
+          }
+        ]
       }
     },
     "/invoices/{invoice_id}/items" : {
