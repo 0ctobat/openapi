@@ -1040,6 +1040,26 @@
         "description" : "Returns a list of Credit Notes.",
         "parameters" : [
           {
+            "name" : "credit_note_date",
+            "in" : "query",
+            "required" : false,
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "gte" : {
+                  "type" : "string",
+                  "format" : "date-time",
+                  "description" : "Filter on objects created on or after the value provided"
+                },
+                "lte" : {
+                  "type" : "string",
+                  "format" : "date-time",
+                  "description" : "Filter on objects created on or before the value provided"
+                }
+              }
+            }
+          },
+          {
             "name" : "customer",
             "in" : "query",
             "required" : false,
@@ -3028,6 +3048,26 @@
               "description" : "Pagination cursor"
             },
             "description" : "Pagination cursor"
+          },
+          {
+            "name" : "invoice_date",
+            "in" : "query",
+            "required" : false,
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "gte" : {
+                  "type" : "string",
+                  "format" : "date-time",
+                  "description" : "Filter on objects created on or after the value provided"
+                },
+                "lte" : {
+                  "type" : "string",
+                  "format" : "date-time",
+                  "description" : "Filter on objects created on or before the value provided"
+                }
+              }
+            }
           },
           {
             "name" : "limit",
@@ -7053,6 +7093,26 @@
               "description" : "A filter on the list based on the transaction status."
             },
             "description" : "A filter on the list based on the transaction status."
+          },
+          {
+            "name" : "transaction_date",
+            "in" : "query",
+            "required" : false,
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "gte" : {
+                  "type" : "string",
+                  "format" : "date-time",
+                  "description" : "Filter on objects created on or after the value provided"
+                },
+                "lte" : {
+                  "type" : "string",
+                  "format" : "date-time",
+                  "description" : "Filter on objects created on or before the value provided"
+                }
+              }
+            }
           }
         ],
         "responses" : {
