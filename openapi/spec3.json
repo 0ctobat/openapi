@@ -13950,7 +13950,7 @@
     {
       "name": "Self Billing API",
       "tags": [
-        "Suppliers"
+        "SelfBillingInvoices"
       ]
     },
     {
