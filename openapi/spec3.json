@@ -5978,6 +5978,119 @@
   }
 }
     },
+    "/self_billing_invoices": {
+      "get": {
+  "summary": "List Self Billing Invoices",
+  "operationId": "SelfBillingInvoices_Index",
+  "tags": [
+    "SelfBillingInvoices"
+  ],
+  "description": "Returns a list of Self Billing Invoices.",
+  "parameters": [
+    {
+      "name": "ending_before",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "required": false,
+        "description": "Pagination cursor"
+      },
+      "description": "Pagination cursor"
+    },
+    {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "integer",
+        "required": false,
+        "description": "A limit on the number of objects to be returned. Limit can range between 1 and 100."
+      },
+      "description": "A limit on the number of objects to be returned. Limit can range between 1 and 100."
+    },
+    {
+      "name": "payment_status",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "enum": [
+          "paid",
+          "unpaid"
+        ],
+        "description": "A filter on the list based on the `payment_status` value. `unpaid` returns partially paid and totally unpaid invoices"
+      },
+      "description": "A filter on the list based on the `payment_status` value. `unpaid` returns partially paid and totally unpaid invoices"
+    },
+    {
+      "name": "sequence_number",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "description": "A filter on the list based on the sequence number of the invoice"
+      },
+      "description": "A filter on the list based on the sequence number of the invoice"
+    },
+    {
+      "name": "source",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "example": "inv_xxxxx",
+        "description": "ID of the external object this invoice was synced from, to filter results"
+      },
+      "description": "ID of the external object this invoice was synced from, to filter results"
+    },
+    {
+      "name": "starting_after",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "required": false,
+        "description": "Pagination cursor"
+      },
+      "description": "Pagination cursor"
+    },
+    {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "enum": [
+          "draft",
+          "cancelled",
+          "confirmed"
+        ],
+        "description": "A filter on the list based on the `status` value"
+      },
+      "description": "A filter on the list based on the `status` value"
+    },
+    {
+      "name": "supplier",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "description": "A filter on the list based on the supplier ID. The value must be a string."
+      },
+      "description": "A filter on the list based on the supplier ID. The value must be a string."
+    }
+  ],
+  "responses": {
+    "200": {
+      "$ref": "#/components/responses/SelfBillingInvoicesListResponse"
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+}
+    },
     "/self_billing_invoices/{self_billing_invoice_id}/purchase_items": {
       "get": {
   "summary": "List Purchase Items",
