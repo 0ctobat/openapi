@@ -13948,6 +13948,12 @@
       ]
     },
     {
+      "name": "Self Billing API",
+      "tags": [
+        "Suppliers"
+      ]
+    },
+    {
       "name": "Beanie",
       "tags": [
         "Sessions",
