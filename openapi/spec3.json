@@ -6089,6 +6089,420 @@
       "$ref": "#/components/responses/ErrorResponse"
     }
   }
+},
+      "post": {
+  "summary": "Create a self-billing invoice",
+  "operationId": "SelfBillingInvoices_Create",
+  "tags": [
+    "SelfBillingInvoices"
+  ],
+  "description": "Create a self-billing invoice. Its status will be `draft`",
+  "requestBody": {
+    "required": false,
+    "description": "",
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "currency": {
+              "type": "string",
+              "description": "A string representing the ISO-code of the currency of the invoice"
+            },
+            "supplier": {
+              "type": "string",
+              "description": "ID of the supplier who bills"
+            },
+            "custom_fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the custom field."
+                  },
+                  "value": {
+                    "type": "string",
+                    "description": "The value of the custom field."
+                  }
+                }
+              },
+              "description": "List of custom fields to be displayed in the invoice"
+            },
+            "description": {
+              "type": "string",
+              "description": "A string describing the invoice's description"
+            },
+            "document_template": {
+              "type": "string",
+              "description": "ID of the document template used by this invoice. If not filled, it uses the default document template of the account."
+            },
+            "language": {
+              "type": "string",
+              "description": "A string representing the locale that is used for the invoice."
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "description": "Set of key-value pairs that you can attach to an object"
+            },
+            "notes": {
+              "type": "string",
+              "description": "A custom text that you want to attach to and print on the invoice"
+            },
+            "order": {
+              "type": "string",
+              "description": "ID of the `order` this invoice is related to."
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "gateway": {
+                    "type": "string",
+                    "description": "The name of the gateway. E.g.: stripe, paypal"
+                  },
+                  "identifier": {
+                    "type": "string",
+                    "description": "The object ID from the gateway"
+                  },
+                  "source_type": {
+                    "type": "string",
+                    "description": "The object type from the gateway"
+                  }
+                }
+              },
+              "description": "Information related to the platform and the ID of the object this invoice was synced from"
+            }
+          },
+          "required": [
+            "currency",
+            "supplier"
+          ]
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/self_billing_invoice"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+}
+    },
+    "/self_billing_invoices/{id}": {
+      "get": {
+  "summary": "Retrieve a Single Self Billing Invoice",
+  "operationId": "SelfBillingInvoices_Show",
+  "tags": [
+    "SelfBillingInvoices"
+  ],
+  "description": "Returns a Single Self Billing Invoice by its ID.",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/self_billing_invoice"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+},
+      "patch": {
+  "summary": "Update a draft self billing invoice",
+  "operationId": "SelfBillingInvoices_Update",
+  "tags": [
+    "SelfBillingInvoices"
+  ],
+  "description": "Update a draft self billing invoice by its ID.",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "requestBody": {
+    "required": false,
+    "description": "",
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "description": "A string representing the invoice's description"
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "description": "Set of key-value pairs that you can attach to an object"
+            },
+            "notes": {
+              "type": "string",
+              "description": "A custom text that you want to attach to and print on the invoice"
+            }
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/self_billing_invoice"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+},
+      "put": {
+  "summary": "Update a draft self billing invoice",
+  "operationId": "SelfBillingInvoices_Update",
+  "tags": [
+    "SelfBillingInvoices"
+  ],
+  "description": "Update a draft self billing invoice by its ID.",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "requestBody": {
+    "required": false,
+    "description": "",
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "description": "A string representing the invoice's description"
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "description": "Set of key-value pairs that you can attach to an object"
+            },
+            "notes": {
+              "type": "string",
+              "description": "A custom text that you want to attach to and print on the invoice"
+            }
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/self_billing_invoice"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+},
+      "delete": {
+  "summary": "Delete a draft Self-Billing Invoice",
+  "operationId": "SelfBillingInvoices_Destroy",
+  "tags": [
+    "SelfBillingInvoices"
+  ],
+  "description": "Delete a draft Self-billing Invoice by its ID. The invoice must be a `draft`",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/deleted_self_billing_invoice"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+}
+    },
+    "/self_billing_invoices/{id}/cancel": {
+      "patch": {
+  "summary": "Cancel a self-billing invoice",
+  "operationId": "SelfBillingInvoices_Cancel",
+  "tags": [
+    "SelfBillingInvoices"
+  ],
+  "description": "Cancel a self-billing invoice that has already been confirmed. It will move its `status` to `cancelled`, and generate a credit note.",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/self_billing_invoice"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+}
+    },
+    "/self_billing_invoices/{id}/confirm": {
+      "patch": {
+  "summary": "Confirm a `draft` self billing invoice",
+  "operationId": "SelfBillingInvoices_Confirm",
+  "tags": [
+    "SelfBillingInvoices"
+  ],
+  "description": "Confirm a self billing invoice. It won't be editable anymore, and take its sequence number, as well as an invoice date. The PDF will be generated as well. The invoice must be a `draft` and have at least one `item` attached to be confirmed",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/self_billing_invoice"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+}
+    },
+    "/self_billing_invoices/{id}/send": {
+      "post": {
+  "summary": "Send a self-billing invoice by Email",
+  "operationId": "SelfBillingInvoices_SendByEmail",
+  "tags": [
+    "SelfBillingInvoices"
+  ],
+  "description": "Send a self-billing invoice by Email by its ID.",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/self_billing_invoice"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
 }
     },
     "/self_billing_invoices/{self_billing_invoice_id}/purchase_items": {
