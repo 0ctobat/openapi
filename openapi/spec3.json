@@ -5999,26 +5999,6 @@
       "description": "Pagination cursor"
     },
     {
-      "name": "self_billing_invoice_date",
-      "in": "query",
-      "required": false,
-      "schema": {
-        "type": "object",
-        "properties": {
-          "gte": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Filter on objects created on or after the value provided"
-          },
-          "lte": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Filter on objects created on or before the value provided"
-          }
-        }
-      }
-    },
-    {
       "name": "limit",
       "in": "query",
       "required": false,
