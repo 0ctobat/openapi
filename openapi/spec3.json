@@ -7408,6 +7408,30 @@
               },
               "description": "Information related to the platform and the ID of the object this supplier was synced from"
             },
+            "specific_tax_rates": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "rate": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "The tax percentage that applies."
+                  },
+                  "tax": {
+                    "type": "string",
+                    "example": "eu-vat",
+                    "description": "The tax type."
+                  },
+                  "type": {
+                    "type": "string",
+                    "example": "Country",
+                    "description": "The tax juridiction type."
+                  }
+                }
+              },
+              "description": "A set of Tax rates that apply to the given supplier when they sell to the current account entity"
+            },
             "tax_exempt": {
               "type": "boolean",
               "default": false,
@@ -7664,6 +7688,30 @@
               },
               "description": "Information related to the platform and the ID of the object this supplier was synced from"
             },
+            "specific_tax_rates": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "rate": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "The tax percentage that applies."
+                  },
+                  "tax": {
+                    "type": "string",
+                    "example": "eu-vat",
+                    "description": "The tax type."
+                  },
+                  "type": {
+                    "type": "string",
+                    "example": "Country",
+                    "description": "The tax juridiction type."
+                  }
+                }
+              },
+              "description": "A set of Tax rates that apply to the given supplier when they sell to the current account entity"
+            },
             "tax_exempt": {
               "type": "boolean",
               "default": false,
@@ -7866,6 +7914,30 @@
                 }
               },
               "description": "Information related to the platform and the ID of the object this supplier was synced from"
+            },
+            "specific_tax_rates": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "rate": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "The tax percentage that applies."
+                  },
+                  "tax": {
+                    "type": "string",
+                    "example": "eu-vat",
+                    "description": "The tax type."
+                  },
+                  "type": {
+                    "type": "string",
+                    "example": "Country",
+                    "description": "The tax juridiction type."
+                  }
+                }
+              },
+              "description": "A set of Tax rates that apply to the given supplier when they sell to the current account entity"
             },
             "tax_exempt": {
               "type": "boolean",
@@ -11585,6 +11657,30 @@
             },
             "description": "Information related to the platform and the ID of the object this supplier was synced from"
           },
+          "specific_tax_rates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "rate": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "The tax percentage that applies."
+                },
+                "tax": {
+                  "type": "string",
+                  "example": "eu-vat",
+                  "description": "The tax type."
+                },
+                "type": {
+                  "type": "string",
+                  "example": "Country",
+                  "description": "The tax juridiction type."
+                }
+              }
+            },
+            "description": "A set of Tax rates that apply to the given supplier when they sell to the current account entity"
+          },
           "tax_exempt": {
             "type": "boolean",
             "default": false,
@@ -13884,6 +13980,7 @@
       "name": "Self Billing API",
       "tags": [
         "Suppliers",
+        "Self Billing Invoices",
         "PurchaseItems"
       ]
     },
