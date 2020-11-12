@@ -7408,23 +7408,6 @@
               },
               "description": "Information related to the platform and the ID of the object this supplier was synced from"
             },
-            "specific_tax_rates": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "rate": {
-                  "type": "Float",
-                  "description": "The tax percentage that applies."
-                },
-                "tax": {
-                  "type": "String",
-                  "description": "The tax type.",
-                  "example": "eu-vat"
-                },
-                "description": "The tax juridiction type."
-              },
-              "description": "A set of Tax rates that apply to the given supplier when they sell to the current account entity"
-            },
             "tax_exempt": {
               "type": "boolean",
               "default": false,
@@ -7681,23 +7664,6 @@
               },
               "description": "Information related to the platform and the ID of the object this supplier was synced from"
             },
-            "specific_tax_rates": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "rate": {
-                  "type": "Float",
-                  "description": "The tax percentage that applies."
-                },
-                "tax": {
-                  "type": "String",
-                  "description": "The tax type.",
-                  "example": "eu-vat"
-                },
-                "description": "The tax juridiction type."
-              },
-              "description": "A set of Tax rates that apply to the given supplier when they sell to the current account entity"
-            },
             "tax_exempt": {
               "type": "boolean",
               "default": false,
@@ -7900,23 +7866,6 @@
                 }
               },
               "description": "Information related to the platform and the ID of the object this supplier was synced from"
-            },
-            "specific_tax_rates": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "rate": {
-                  "type": "Float",
-                  "description": "The tax percentage that applies."
-                },
-                "tax": {
-                  "type": "String",
-                  "description": "The tax type.",
-                  "example": "eu-vat"
-                },
-                "description": "The tax juridiction type."
-              },
-              "description": "A set of Tax rates that apply to the given supplier when they sell to the current account entity"
             },
             "tax_exempt": {
               "type": "boolean",
@@ -11635,23 +11584,6 @@
               }
             },
             "description": "Information related to the platform and the ID of the object this supplier was synced from"
-          },
-          "specific_tax_rates": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "rate": {
-                "type": "Float",
-                "description": "The tax percentage that applies."
-              },
-              "tax": {
-                "type": "String",
-                "description": "The tax type.",
-                "example": "eu-vat"
-              },
-              "description": "The tax juridiction type."
-            },
-            "description": "A set of Tax rates that apply to the given supplier when they sell to the current account entity"
           },
           "tax_exempt": {
             "type": "boolean",
