@@ -13951,8 +13951,8 @@
       "name": "Self Billing API",
       "tags": [
         "Suppliers",
-        "SelfBillingInvoices",
-        "PurchaseItems"
+        "Self Billing Invoices",
+        "Purchase Items"
       ]
     },
     {
