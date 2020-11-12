@@ -5978,59 +5978,6 @@
   }
 }
     },
-    "/self_billing_invoices/{id}": {
-      "get": {
-  "summary": "Retrieve a Single Self Billing Invoice",
-  "operationId": "SelfBillingInvoices_Show",
-  "tags": [
-    "SelfBillingInvoices"
-  ],
-  "description": "Returns a Single Self Billing Invoice by its ID.",
-  "parameters": [
-    {
-      "name": "id",
-      "in": "query",
-      "required": false,
-      "schema": {
-        "type": "string"
-      }
-    }
-  ],
-  "responses": {
-    "200": {
-      "description": "success",
-      "content": {
-        "application/json": {
-          "schema": {
-            "$ref": "#/components/schemas/self_billing_invoice"
-          }
-        }
-      }
-    },
-    "default": {
-      "$ref": "#/components/responses/ErrorResponse"
-    }
-  },
-  "x-code-samples": [
-    {
-      "lang": "curl",
-      "source": "# Definition\nGET https://apiv2.octobat.com/self_billing_invoices/:id\n\n# Example request\n$ curl https://apiv2.octobat.com/self_billing_invoices/oc_si_xxxxxxxx \\\n-u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt:"
-    },
-    {
-      "lang": "ruby",
-      "source": "# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\n\nself_billing_invoice = Octobat::SelfBillingInvoice.retrieve(\"oc_si_xxxxxxxx\")"
-    },
-    {
-      "lang": "node",
-      "source": "// Example request\nconst octobat = require('octobat-npm')('oc_test_skey_mf8MurlswKilc78QolUN7Qtt');\noctobat.self_billing_invoices.retrieve({\n  \"oc_si_xxxxxxxx\"\n}).then(function(self_billing_invoice) {\n  // ...\n}).catch(function(err) {\n  // ...\n})"
-    },
-    {
-      "lang": "php",
-      "source": "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$self_billing_invoice = \\Octobat\\SelfBillingInvoice::retrieve(\"oc_si_xxxxxxxx\");"
-    }
-  ]
-}
-    },
     "/self_billing_invoices/{self_billing_invoice_id}/purchase_items": {
       "get": {
   "summary": "List Purchase Items",
