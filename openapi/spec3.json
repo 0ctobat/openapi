@@ -8006,6 +8006,10 @@
               ],
               "description": "If you want to force the calculation in a B2B or a B2C mode"
             },
+            "supplier_tax_id": {
+              "type": "string",
+              "description": "ID of the supplier `tax_id` object used for this evidence"
+            },
             "transaction_date": {
               "type": "string",
               "format": "date-time",
@@ -8199,6 +8203,10 @@
                 "B2C"
               ],
               "description": "If you want to force the calculation in a B2B or a B2C mode"
+            },
+            "supplier_tax_id": {
+              "type": "string",
+              "description": "ID of the supplier `tax_id` object used for this evidence"
             },
             "transaction_date": {
               "type": "string",
@@ -11742,6 +11750,10 @@
               }
             },
             "description": "Selected Evidence to describe the supplier, calculated from the Supplier evidence"
+          },
+          "supplier_tax_id": {
+            "type": "string",
+            "description": "ID of the supplier `tax_id` object used for this evidence"
           },
           "tax": {
             "type": "string",
