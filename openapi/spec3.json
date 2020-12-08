@@ -72,6 +72,9 @@
       "name": "CreditNotes"
     },
     {
+      "name": "CustomerBalanceTransactions"
+    },
+    {
       "name": "Customers",
       "description": "Customer objects are required to create other Octobat objects such as invoices or transactions that must be attached to them"
     },
@@ -2374,6 +2377,188 @@
   ]
 }
     },
+    "/customers/{customer_id}/customer_balance_transactions": {
+      "get": {
+  "summary": "List CustomerBalanceTransactions",
+  "operationId": "CustomerBalanceTransactions_Index",
+  "tags": [
+    "CustomerBalanceTransactions"
+  ],
+  "description": "Returns a list of Customer Balance Transactions.",
+  "parameters": [
+    {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "integer",
+        "required": false,
+        "description": "A limit on the number of objects to be returned. Limit can range between 1 and 100."
+      },
+      "description": "A limit on the number of objects to be returned. Limit can range between 1 and 100."
+    },
+    {
+      "name": "customer_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "description": "The ID the `customer` to filter items on"
+      },
+      "description": "The ID the `customer` to filter items on"
+    },
+    {
+      "name": "starting_after",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "required": false,
+        "description": "Pagination cursor"
+      },
+      "description": "Pagination cursor"
+    }
+  ],
+  "responses": {
+    "200": {
+      "$ref": "#/components/responses/CustomerBalanceTransactionsListResponse"
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+},
+      "post": {
+  "summary": "Create a customer balance transaction",
+  "operationId": "CustomerBalanceTransactions_Create",
+  "tags": [
+    "CustomerBalanceTransactions"
+  ],
+  "parameters": [
+    {
+      "name": "customer_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "description": "The ID the customer to create balance transactions on"
+      },
+      "description": "The ID the customer to create balance transactions on"
+    }
+  ],
+  "requestBody": {
+    "required": false,
+    "description": "",
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "integer",
+              "description": "The amount of the transaction. A negative value is a credit for the customer's balance, and a positive value is a debit to the customer's balance"
+            },
+            "balance_type": {
+              "type": "string",
+              "description": "Transaction type"
+            },
+            "currency": {
+              "type": "string",
+              "description": "Currency ISO code. Must be the same than the related customer's currency"
+            },
+            "credit_note": {
+              "type": "string",
+              "description": "The ID of the `credit_note` this `customer_balance_transaction` is related to"
+            },
+            "description": {
+              "type": "string",
+              "description": "Name of the product / service sold."
+            },
+            "invoice": {
+              "type": "string",
+              "description": "The ID of the `invoice` this `customer_balance_transaction` is related to"
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "description": "Set of key-value pairs that you can attach to an object"
+            }
+          },
+          "required": [
+            "amount",
+            "balance_type",
+            "currency"
+          ]
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/customer_balance_transaction"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+}
+    },
+    "/customers/{customer_id}/customer_balance_transactions/{id}": {
+      "get": {
+  "summary": "Retrieve a single CustomerBalanceTransactions",
+  "operationId": "CustomerBalanceTransactions_Show",
+  "tags": [
+    "CustomerBalanceTransactions"
+  ],
+  "description": "Returns a single Customer Balance Transaction by its ID.",
+  "parameters": [
+    {
+      "name": "customer_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "description": "The ID the customer to filter balance transactions on"
+      },
+      "description": "The ID the customer to filter balance transactions on"
+    },
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/purchase_item"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+}
+    },
     "/customers/{id}": {
       "get": {
   "summary": "Retrieve a Single Customer",
@@ -3235,6 +3420,10 @@
               "type": "string",
               "description": "ID of the document template used by this invoice. If not filled, it uses the default document template of the account."
             },
+            "due_date": {
+              "type": "date",
+              "description": "The date on which payment for this invoice is due"
+            },
             "invoice_numbering_sequence": {
               "type": "string",
               "description": "ID of the invoice numbering sequence this invoice belongs to. If not filled, it uses the default invoice numbering sequence of the account."
@@ -3418,6 +3607,10 @@
               "type": "string",
               "description": "A string describing the invoice's description"
             },
+            "due_date": {
+              "type": "date",
+              "description": "The date on which payment for this invoice is due"
+            },
             "metadata": {
               "type": "object",
               "properties": {
@@ -3498,6 +3691,10 @@
             "description": {
               "type": "string",
               "description": "A string describing the invoice's description"
+            },
+            "due_date": {
+              "type": "date",
+              "description": "The date on which payment for this invoice is due"
             },
             "metadata": {
               "type": "object",
@@ -3813,6 +4010,41 @@
       "source": "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice = \\Octobat\\Invoice::send_by_email(\"oc_in_xxxxxxxx\");"
     }
   ]
+}
+    },
+    "/invoices/{id}/set_payment_terms": {
+      "patch": {
+  "summary": "Modify a `confirmed` invoice payment terms",
+  "operationId": "Invoices_SetPaymentTerms",
+  "tags": [
+    "Invoices"
+  ],
+  "description": "Modify an invoice payment terms. It must be confirmed",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/invoice"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
 }
     },
     "/invoices/{invoice_id}/items": {
@@ -4646,6 +4878,34 @@
 }
     },
     "/plaza/accounts": {
+      "get": {
+  "summary": "List Accounts",
+  "operationId": "Accounts_Index",
+  "tags": [
+    "Accounts"
+  ],
+  "description": "Returns a list of accounts.",
+  "parameters": [
+    {
+      "name": "active",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "boolean",
+        "description": "Filter the list on accounts that are active / inactive. The value must be a boolean."
+      },
+      "description": "Filter the list on accounts that are active / inactive. The value must be a boolean."
+    }
+  ],
+  "responses": {
+    "200": {
+      "$ref": "#/components/responses/AccountsListResponse"
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+},
       "post": {
   "summary": "Create an account",
   "operationId": "Accounts_Create",
@@ -9952,6 +10212,66 @@
           }
         }
       },
+      "customer_balance_transaction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The customer balance transaction ID"
+          },
+          "object": {
+            "type": "string",
+            "enum": [
+              "customer_balance_transaction"
+            ],
+            "description": "String representing the object type"
+          },
+          "livemode": {
+            "type": "boolean"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "The amount of the transaction. A negative value is a credit for the customer's balance, and a positive value is a debit to the customer's balance"
+          },
+          "balance_type": {
+            "type": "string",
+            "description": "Transaction type"
+          },
+          "credit_note": {
+            "type": "string",
+            "description": "The ID of the `credit_note` this `customer_balance_transaction` is related to"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency ISO code"
+          },
+          "customer": {
+            "type": "string",
+            "description": "The ID of the `customer` this `customer_balance_transaction` is related to"
+          },
+          "description": {
+            "type": "string",
+            "description": "Name of the product / service sold."
+          },
+          "ending_balance_cents": {
+            "type": "integer",
+            "description": "The customer’s balance after the transaction was applied. A negative value decreases the amount due on the customer’s next invoice. A positive value increases the amount due on the customer’s next invoice."
+          },
+          "invoice": {
+            "type": "string",
+            "description": "The ID of the `invoice` this `customer_balance_transaction` is related to"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "description": "Set of key-value pairs that you can attach to an object"
+          }
+        }
+      },
       "payment_source": {
         "type": "object",
         "properties": {
@@ -10036,6 +10356,14 @@
           },
           "livemode": {
             "type": "boolean"
+          },
+          "balance_amount": {
+            "type": "integer",
+            "description": "Current balance, if any, being stored on the customer. If negative, the customer has credit to apply to their next invoice. If positive, the customer has an amount owed that will be added to their next invoice"
+          },
+          "balance_currency": {
+            "type": "string",
+            "description": "The currency of the current balance"
           },
           "billing_address_line1": {
             "type": "string"
@@ -10320,6 +10648,14 @@
           "livemode": {
             "type": "boolean"
           },
+          "attempted": {
+            "type": "boolean",
+            "description": "Whether a payment for this invoice has been tried, whether it was successful or not"
+          },
+          "attempt_count": {
+            "type": "integer",
+            "description": "Number of payment attempts made for this invoice"
+          },
           "cancel_and_replace_invoice": {
             "type": "string",
             "description": "The ID of the invoice that this invoice replaces"
@@ -10426,6 +10762,10 @@
             "type": "string",
             "description": "ID of the document template used by this invoice"
           },
+          "due_date": {
+            "type": "date",
+            "description": "The date on which payment for this invoice is due"
+          },
           "email_sent": {
             "type": "boolean",
             "description": "Whether the invoice has been sent by email to the customer or not"
@@ -10506,6 +10846,11 @@
               }
             },
             "description": "Set of key-value pairs that you can attach to an object"
+          },
+          "next_payment_attempt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The time at which payment will next be attempted, if relevant"
           },
           "notes": {
             "type": "string",
@@ -13193,6 +13538,35 @@
           }
         }
       },
+      "CustomerBalanceTransactionsListResponse": {
+        "description": "success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/customer_balance_transaction"
+                  }
+                },
+                "has_more": {
+                  "type": "boolean",
+                  "description": "True if this list has another page of items after this one that can be fetched"
+                },
+                "object": {
+                  "type": "string",
+                  "enum": [
+                    "list"
+                  ],
+                  "description": "String representing the object type"
+                }
+              }
+            }
+          }
+        }
+      },
       "CustomersListResponse": {
         "description": "success",
         "content": {
@@ -13640,6 +14014,35 @@
                   "items": {
                     "$ref": "#/components/schemas/beanieConfiguration"
                   }
+                },
+                "object": {
+                  "type": "string",
+                  "enum": [
+                    "list"
+                  ],
+                  "description": "String representing the object type"
+                }
+              }
+            }
+          }
+        }
+      },
+      "AccountsListResponse": {
+        "description": "success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/account"
+                  }
+                },
+                "has_more": {
+                  "type": "boolean",
+                  "description": "True if this list has another page of items after this one that can be fetched"
                 },
                 "object": {
                   "type": "string",
