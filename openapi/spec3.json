@@ -14553,7 +14553,7 @@
                 "data": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/subscriptions"
+                    "$ref": "#/components/schemas/subscription"
                   }
                 },
                 "has_more": {
