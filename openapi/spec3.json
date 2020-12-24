@@ -7383,7 +7383,7 @@
           "type": "object",
           "properties": {
             "customer": {
-              "type": "integer",
+              "type": "string",
               "description": "ID of the customer to attach this subscription to"
             },
             "currency": {
