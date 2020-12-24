@@ -112,6 +112,10 @@
       "name": "Sessions"
     },
     {
+      "name": "Subscriptions",
+      "description": "Subscriptions objects are defining recurring cycles of items sold, or fees collected, and generates a recurring invoice for accounting purposes."
+    },
+    {
       "name": "Suppliers",
       "description": "Suppliers represents entities that sell goods and services to the current account entity. They are required to create self-invoices."
     },
@@ -138,6 +142,9 @@
     {
       "name": "Transactions",
       "description": "Transaction objects represent payments or refunds, successful or failed"
+    },
+    {
+      "name": "UsageItems"
     },
     {
       "name": "Warehouses"
@@ -3313,10 +3320,10 @@
       "required": false,
       "schema": {
         "type": "string",
-        "example": "cus_xxxxxxxxx",
-        "description": "ID of the external object this customer was synced from, to filter results"
+        "example": "ch_xxxxxxxxx",
+        "description": "ID of the external object this invoice was synced from, to filter results"
       },
-      "description": "ID of the external object this customer was synced from, to filter results"
+      "description": "ID of the external object this invoice was synced from, to filter results"
     },
     {
       "name": "starting_after",
@@ -3957,6 +3964,41 @@
       "source": "// Example request\n\\Octobat\\Octobat::setApiKey('oc_test_skey_BQokikJOvBiI2HlWgH4olfQ2');\n$invoice = \\Octobat\\Invoice::confirm(\"oc_in_xxxxxxxx\");"
     }
   ]
+}
+    },
+    "/invoices/{id}/mark_uncollectible": {
+      "patch": {
+  "summary": "Mark a `confirmed` invoice as uncollectible",
+  "operationId": "Invoices_MarkUncollectible",
+  "tags": [
+    "Invoices"
+  ],
+  "description": "Mark an invoice as uncollectible significates that you're no longer expecting a payment for it, but it still remains in the list for accounting purposes.",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/invoice"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
 }
     },
     "/invoices/{id}/send": {
@@ -7244,6 +7286,505 @@
         "application/json": {
           "schema": {
             "$ref": "#/components/schemas/deleted_purchase_item"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+}
+    },
+    "/subscriptions": {
+      "get": {
+  "summary": "List Subscriptions",
+  "operationId": "Subscriptions_Index",
+  "tags": [
+    "Subscriptions"
+  ],
+  "description": "Returns a list of Subscriptions.",
+  "parameters": [
+    {
+      "name": "customer",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "description": "The ID the customer to filter subscriptions on"
+      },
+      "description": "The ID the customer to filter subscriptions on"
+    },
+    {
+      "name": "ending_before",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "required": false,
+        "description": "Pagination cursor"
+      },
+      "description": "Pagination cursor"
+    },
+    {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "integer",
+        "required": false,
+        "description": "A limit on the number of objects to be returned. Limit can range between 1 and 100."
+      },
+      "description": "A limit on the number of objects to be returned. Limit can range between 1 and 100."
+    },
+    {
+      "name": "source",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "description": "ID of the external object this subscription was synced from, to filter results"
+      },
+      "description": "ID of the external object this subscription was synced from, to filter results"
+    },
+    {
+      "name": "starting_after",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "required": false,
+        "description": "Pagination cursor"
+      },
+      "description": "Pagination cursor"
+    }
+  ],
+  "responses": {
+    "200": {
+      "$ref": "#/components/responses/SubscriptionsListResponse"
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+},
+      "post": {
+  "summary": "Create a subscription",
+  "operationId": "Subscriptions_Create",
+  "tags": [
+    "Subscriptions"
+  ],
+  "requestBody": {
+    "required": false,
+    "description": "",
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "customer": {
+              "type": "integer",
+              "description": "ID of the customer to attach this subscription to"
+            },
+            "currency": {
+              "type": "string",
+              "description": "Currency ISO code. Must be the same than the related subscription's currency"
+            },
+            "interval": {
+              "type": "string",
+              "enum": [
+                "week",
+                "month",
+                "year"
+              ],
+              "description": "The recurring interval of when an invoice must be generated"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "sum_usage"
+              ],
+              "description": "The type of the subscription, designing how the invoice amounts are calculated"
+            },
+            "description": {
+              "type": "string",
+              "description": "Description of the subscription, might be the products/services sold."
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "description": "Set of key-value pairs that you can attach to an object"
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "gateway": {
+                    "type": "string",
+                    "description": "The name of the gateway. E.g.: stripe, paypal"
+                  },
+                  "identifier": {
+                    "type": "string",
+                    "description": "The object ID from the gateway"
+                  },
+                  "source_type": {
+                    "type": "string",
+                    "description": "The object type from the gateway"
+                  }
+                }
+              },
+              "description": "Information related to the platform and the ID of the object this item was synced from"
+            }
+          },
+          "required": [
+            "customer",
+            "currency",
+            "interval",
+            "type"
+          ]
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/subscription"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+}
+    },
+    "/subscriptions/{id}": {
+      "get": {
+  "summary": "Retrieve a single Subscription",
+  "operationId": "Subscriptions_Show",
+  "tags": [
+    "Subscriptions"
+  ],
+  "description": "Returns a single Subscription by its ID.",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/subscription"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+},
+      "delete": {
+  "summary": "Delete a Subscription",
+  "operationId": "Subscriptions_Destroy",
+  "tags": [
+    "Subscriptions"
+  ],
+  "description": "Delete a Subscription by its ID.",
+  "parameters": [
+    {
+      "name": "subscription_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "description": "The ID the subscription to delete"
+      },
+      "description": "The ID the subscription to delete"
+    },
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/deleted_subscription"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+}
+    },
+    "/subscriptions/{subscription_id}/usage_items": {
+      "get": {
+  "summary": "List Usage Items",
+  "operationId": "UsageItems_Index",
+  "tags": [
+    "UsageItems"
+  ],
+  "description": "Returns a list of Usage Items.",
+  "parameters": [
+    {
+      "name": "ending_before",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "required": false,
+        "description": "Pagination cursor"
+      },
+      "description": "Pagination cursor"
+    },
+    {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "integer",
+        "required": false,
+        "description": "A limit on the number of objects to be returned. Limit can range between 1 and 100."
+      },
+      "description": "A limit on the number of objects to be returned. Limit can range between 1 and 100."
+    },
+    {
+      "name": "subscription_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "description": "The ID the self-billing invoice to filter items on"
+      },
+      "description": "The ID the self-billing invoice to filter items on"
+    },
+    {
+      "name": "starting_after",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "required": false,
+        "description": "Pagination cursor"
+      },
+      "description": "Pagination cursor"
+    }
+  ],
+  "responses": {
+    "200": {
+      "$ref": "#/components/responses/UsageItemsListResponse"
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+},
+      "post": {
+  "summary": "Create a usage item",
+  "operationId": "UsageItems_Create",
+  "tags": [
+    "UsageItems"
+  ],
+  "parameters": [
+    {
+      "name": "subscription_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "description": "The ID the subscription invoice to create usage items on"
+      },
+      "description": "The ID the subscription invoice to create usage items on"
+    }
+  ],
+  "requestBody": {
+    "required": false,
+    "description": "",
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "integer",
+              "description": "The gross amount, in the currency, of the usage item"
+            },
+            "currency": {
+              "type": "string",
+              "description": "Currency ISO code. Must be the same than the related subscription's currency"
+            },
+            "date": {
+              "type": "string",
+              "format": "date-time",
+              "description": "The datetime of this usage item"
+            },
+            "description": {
+              "type": "string",
+              "description": "Name of the product / service sold."
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "description": "Set of key-value pairs that you can attach to an object"
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "gateway": {
+                    "type": "string",
+                    "description": "The name of the gateway. E.g.: stripe, paypal"
+                  },
+                  "identifier": {
+                    "type": "string",
+                    "description": "The object ID from the gateway"
+                  },
+                  "source_type": {
+                    "type": "string",
+                    "description": "The object type from the gateway"
+                  }
+                }
+              },
+              "description": "Information related to the platform and the ID of the object this item was synced from"
+            }
+          },
+          "required": [
+            "amount",
+            "currency"
+          ]
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/usage_item"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+}
+    },
+    "/subscriptions/{subscription_id}/usage_items/{id}": {
+      "get": {
+  "summary": "Retrieve a single Usage Item",
+  "operationId": "UsageItems_Show",
+  "tags": [
+    "UsageItems"
+  ],
+  "description": "Returns a single Usage Item by its ID.",
+  "parameters": [
+    {
+      "name": "subscription_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "description": "The ID the subscription to filter items on"
+      },
+      "description": "The ID the subscription to filter items on"
+    },
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/usage_item"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+},
+      "delete": {
+  "summary": "Delete a pending UsageItem",
+  "operationId": "UsageItems_Destroy",
+  "tags": [
+    "UsageItems"
+  ],
+  "description": "Delete a pending UsageItem by its ID.",
+  "parameters": [
+    {
+      "name": "subscription_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "description": "The ID the subscription to filter items on"
+      },
+      "description": "The ID the subscription to filter items on"
+    },
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/deleted_usage_item"
           }
         }
       }
@@ -10876,7 +11417,8 @@
             "enum": [
               "unpaid",
               "partial",
-              "paid"
+              "paid",
+              "uncollectible"
             ],
             "description": "A string representing whether the invoice is paid or not"
           },
@@ -11689,6 +12231,112 @@
           }
         }
       },
+      "subscription": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "enum": [
+              "subscription"
+            ],
+            "description": "String representing the object type"
+          },
+          "livemode": {
+            "type": "boolean"
+          },
+          "customer": {
+            "type": "string",
+            "description": "The ID of the customer object whose this subscription is attached to"
+          },
+          "currency": {
+            "type": "string",
+            "description": "The currency of the subscription"
+          },
+          "current_period_start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The datetime of the current subscription cycle beginning"
+          },
+          "current_period_end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The datetime of the current subscription cycle end"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the subscription, might be the products/services sold."
+          },
+          "interval": {
+            "type": "string",
+            "enum": [
+              "week",
+              "month",
+              "year"
+            ],
+            "description": "The recurring interval of when an invoice must be generated"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "description": "Set of key-value pairs that you can attach to an object"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "sum_usage"
+            ],
+            "description": "The type of the subscription, designing how the invoice amounts are calculated"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "gateway": {
+                  "type": "string",
+                  "description": "The name of the gateway. E.g.: stripe, paypal"
+                },
+                "identifier": {
+                  "type": "string",
+                  "description": "The object ID from the gateway"
+                },
+                "source_type": {
+                  "type": "string",
+                  "description": "The object type from the gateway"
+                }
+              }
+            },
+            "description": "Information related to the platform and the ID of the object this customer was synced from"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "deleted_subscription": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "deleted": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
       "supplier": {
         "type": "object",
         "properties": {
@@ -12391,6 +13039,102 @@
             "type": "string",
             "format": "date-time",
             "description": "The datetime this transaction was recorded"
+          }
+        }
+      },
+      "deleted_usage_item": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The usage item ID"
+          },
+          "object": {
+            "type": "string",
+            "enum": [
+              "usage_item"
+            ],
+            "description": "String representing the object type"
+          },
+          "deleted": {
+            "type": "boolean",
+            "default": true,
+            "description": "Always equals to `true`"
+          }
+        }
+      },
+      "usage_item": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The purchase item ID"
+          },
+          "object": {
+            "type": "string",
+            "enum": [
+              "usage_item"
+            ],
+            "description": "String representing the object type"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "The gross amount in the currency specified for the usage item."
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency ISO code"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the usage item."
+          },
+          "item": {
+            "type": "string",
+            "description": "The object ID of the Item this usage item has been aggregated in"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "description": "Set of key-value pairs that you can attach to an object"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "gateway": {
+                  "type": "string",
+                  "description": "The name of the gateway. E.g.: stripe, paypal"
+                },
+                "identifier": {
+                  "type": "string",
+                  "description": "The object ID from the gateway"
+                },
+                "source_type": {
+                  "type": "string",
+                  "description": "The object type from the gateway"
+                }
+              }
+            },
+            "description": "Information related to the platform and the ID of the object this item was synced from"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "billed",
+              "cancelled"
+            ],
+            "description": "String representing the usage item status"
+          },
+          "subscription": {
+            "type": "string",
+            "description": "The object ID of the subscription this usage item belongs to"
           }
         }
       },
@@ -13799,6 +14543,35 @@
           }
         }
       },
+      "SubscriptionsListResponse": {
+        "description": "success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/subscriptions"
+                  }
+                },
+                "has_more": {
+                  "type": "boolean",
+                  "description": "True if this list has another page of items after this one that can be fetched"
+                },
+                "object": {
+                  "type": "string",
+                  "enum": [
+                    "list"
+                  ],
+                  "description": "String representing the object type"
+                }
+              }
+            }
+          }
+        }
+      },
       "SuppliersListResponse": {
         "description": "success",
         "content": {
@@ -13955,6 +14728,35 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/transaction"
+                  }
+                },
+                "has_more": {
+                  "type": "boolean",
+                  "description": "True if this list has another page of items after this one that can be fetched"
+                },
+                "object": {
+                  "type": "string",
+                  "enum": [
+                    "list"
+                  ],
+                  "description": "String representing the object type"
+                }
+              }
+            }
+          }
+        }
+      },
+      "UsageItemsListResponse": {
+        "description": "success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/usage_item"
                   }
                 },
                 "has_more": {
@@ -14207,6 +15009,13 @@
         "PaymentRecipients",
         "PaymentRecipientReferences",
         "Transactions"
+      ]
+    },
+    {
+      "name": "Recurring API",
+      "tags": [
+        "Subscriptions",
+        "UsageItems"
       ]
     },
     {
