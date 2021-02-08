@@ -1268,6 +1268,13 @@
                 }
               },
               "description": "Information related to the platform and the ID of the object this credit note was synced from"
+            },
+            "supplier_tax_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Array of supplier `tax_id` objects used for this invoice"
             }
           },
           "required": [
@@ -3488,6 +3495,13 @@
                 }
               },
               "description": "Information related to the platform and the ID of the object this invoice was synced from"
+            },
+            "supplier_tax_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Array of supplier `tax_id` objects used for this invoice"
             }
           },
           "required": [
@@ -7306,6 +7320,16 @@
   "description": "Returns a list of Subscriptions.",
   "parameters": [
     {
+      "name": "currency",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "description": "The currency ISO code to filter subscriptions on"
+      },
+      "description": "The currency ISO code to filter subscriptions on"
+    },
+    {
       "name": "customer",
       "in": "query",
       "required": false,
@@ -7357,6 +7381,19 @@
         "description": "Pagination cursor"
       },
       "description": "Pagination cursor"
+    },
+    {
+      "name": "type",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "enum": [
+          "sum_usage"
+        ],
+        "description": "The type to filter subscriptions on"
+      },
+      "description": "The type to filter subscriptions on"
     }
   ],
   "responses": {
@@ -9115,6 +9152,7 @@
                 "au_abn",
                 "ca_qst",
                 "ch_vat",
+                "gb_vat",
                 "eu_vat",
                 "hk_br",
                 "in_gst",
@@ -9227,6 +9265,7 @@
                 "au_abn",
                 "ca_qst",
                 "ch_vat",
+                "gb_vat",
                 "eu_vat",
                 "hk_br",
                 "in_gst",
@@ -9299,6 +9338,7 @@
                 "au_abn",
                 "ca_qst",
                 "ch_vat",
+                "gb_vat",
                 "eu_vat",
                 "hk_br",
                 "in_gst",
@@ -10732,6 +10772,13 @@
           "supplier_address_country": {
             "type": "string"
           },
+          "supplier_tax_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of supplier `tax_id` objects used for this invoice"
+          },
           "supplier_tax_number": {
             "type": "string"
           },
@@ -11480,6 +11527,13 @@
           },
           "supplier_address_country": {
             "type": "string"
+          },
+          "supplier_tax_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of supplier `tax_id` objects used for this invoice"
           },
           "supplier_tax_number": {
             "type": "string"
@@ -12830,6 +12884,7 @@
               "au_abn",
               "ca_qst",
               "ch_vat",
+              "gb_vat",
               "eu_vat",
               "hk_br",
               "in_gst",
