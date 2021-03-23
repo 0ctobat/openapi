@@ -7478,19 +7478,6 @@
         "description": "Pagination cursor"
       },
       "description": "Pagination cursor"
-    },
-    {
-      "name": "type",
-      "in": "query",
-      "required": false,
-      "schema": {
-        "type": "string",
-        "enum": [
-          "sum_usage"
-        ],
-        "description": "The type to filter subscriptions on"
-      },
-      "description": "The type to filter subscriptions on"
     }
   ],
   "responses": {
@@ -7894,7 +7881,8 @@
       "schema": {
         "type": "string",
         "enum": [
-          "sum_usage"
+          "sum_usage",
+          "send_invoice"
         ],
         "description": "The type to filter subscriptions on"
       },
