@@ -112,6 +112,10 @@
       "name": "Sessions"
     },
     {
+      "name": "SubscriptionItems",
+      "description": "Subscription Items objects allow you to create customer subscriptions with more than one line item."
+    },
+    {
       "name": "Subscriptions",
       "description": "Subscriptions objects are defining recurring cycles of items sold, or fees collected, and generates a recurring invoice for accounting purposes."
     },
@@ -240,6 +244,34 @@
                 "auto"
               ],
               "description": "Whether Beanie should collect the full billing address or not"
+            },
+            "shipping_address_collection": {
+              "type": "object",
+              "properties": {
+                "allowed_countries": {
+                  "type": "array",
+                  "example": [
+                    "FR",
+                    "DE",
+                    "US",
+                    "CA"
+                  ],
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "An explicit list of ISO3166-alpha2 codes of countries where you allow shipping"
+                }
+              },
+              "description": "Whether Beanie should collect the shipping address of the order, and describes the countries you will allow shipping"
+            },
+            "company_details_collection": {
+              "type": "string",
+              "default": "optional",
+              "enum": [
+                "optional",
+                "never"
+              ],
+              "description": "Whether Beanie asks for company details (Tax number / Company name)"
             },
             "phone_number_collection": {
               "type": "boolean",
@@ -427,6 +459,34 @@
               ],
               "description": "Whether Beanie should collect the full billing address or not"
             },
+            "shipping_address_collection": {
+              "type": "object",
+              "properties": {
+                "allowed_countries": {
+                  "type": "array",
+                  "example": [
+                    "FR",
+                    "DE",
+                    "US",
+                    "CA"
+                  ],
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "An explicit list of ISO3166-alpha2 codes of countries where you allow shipping"
+                }
+              },
+              "description": "Whether Beanie should collect the shipping address of the order, and describes the countries you will allow shipping"
+            },
+            "company_details_collection": {
+              "type": "string",
+              "default": "optional",
+              "enum": [
+                "optional",
+                "never"
+              ],
+              "description": "Whether Beanie asks for company details (Tax number / Company name)"
+            },
             "phone_number_collection": {
               "type": "boolean",
               "description": "Whether Beanie should collect the phone number or not"
@@ -573,6 +633,34 @@
               ],
               "description": "Whether Beanie should collect the full billing address or not"
             },
+            "shipping_address_collection": {
+              "type": "object",
+              "properties": {
+                "allowed_countries": {
+                  "type": "array",
+                  "example": [
+                    "FR",
+                    "DE",
+                    "US",
+                    "CA"
+                  ],
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "An explicit list of ISO3166-alpha2 codes of countries where you allow shipping"
+                }
+              },
+              "description": "Whether Beanie should collect the shipping address of the order, and describes the countries you will allow shipping"
+            },
+            "company_details_collection": {
+              "type": "string",
+              "default": "optional",
+              "enum": [
+                "optional",
+                "never"
+              ],
+              "description": "Whether Beanie asks for company details (Tax number / Company name)"
+            },
             "phone_number_collection": {
               "type": "boolean",
               "description": "Whether Beanie should collect the phone number or not"
@@ -662,7 +750,7 @@
             },
             "beanie_configuration": {
               "type": "string",
-              "description": "The ID of the BeanieConfiguration from your Octobat dashboard. It will use your preconfigured `success_url`, `cancel_url`, `billing_address_collection`, `tax_calculation`, `validate_tax_number`, `coupon_collection` settings"
+              "description": "The ID of the BeanieConfiguration from your Octobat dashboard. It will use your preconfigured `success_url`, `cancel_url`, `billing_address_collection`, `shipping_address_collection`, `tax_calculation`, `validate_tax_number`, `coupon_collection` settings"
             },
             "customer": {
               "type": "string",
@@ -799,6 +887,34 @@
                 "auto"
               ],
               "description": "Whether Beanie should collect the full billing address or not"
+            },
+            "shipping_address_collection": {
+              "type": "object",
+              "properties": {
+                "allowed_countries": {
+                  "type": "array",
+                  "example": [
+                    "FR",
+                    "DE",
+                    "US",
+                    "CA"
+                  ],
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "An explicit list of ISO3166-alpha2 codes of countries where you allow shipping"
+                }
+              },
+              "description": "Whether Beanie should collect the shipping address of the order, and describes the countries you will allow shipping. Leave blank to not collect shipping address."
+            },
+            "company_details_collection": {
+              "type": "string",
+              "default": "optional",
+              "enum": [
+                "optional",
+                "never"
+              ],
+              "description": "Whether Beanie asks for company details (Tax number / Company name)"
             },
             "phone_number_collection": {
               "type": "boolean",
@@ -7310,6 +7426,395 @@
   }
 }
     },
+    "/subscription_items": {
+      "get": {
+  "summary": "List Subscription Items",
+  "operationId": "SubscriptionItems_Index",
+  "tags": [
+    "SubscriptionItems"
+  ],
+  "description": "Returns a list of Subscription Items for a given subscription.",
+  "parameters": [
+    {
+      "name": "subscription",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "required": true,
+        "description": "The ID of the subscription whose items will be retrieved"
+      },
+      "description": "The ID of the subscription whose items will be retrieved"
+    },
+    {
+      "name": "ending_before",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "required": false,
+        "description": "Pagination cursor"
+      },
+      "description": "Pagination cursor"
+    },
+    {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "integer",
+        "required": false,
+        "description": "A limit on the number of objects to be returned. Limit can range between 1 and 100."
+      },
+      "description": "A limit on the number of objects to be returned. Limit can range between 1 and 100."
+    },
+    {
+      "name": "starting_after",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "required": false,
+        "description": "Pagination cursor"
+      },
+      "description": "Pagination cursor"
+    },
+    {
+      "name": "type",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "enum": [
+          "sum_usage"
+        ],
+        "description": "The type to filter subscriptions on"
+      },
+      "description": "The type to filter subscriptions on"
+    }
+  ],
+  "responses": {
+    "200": {
+      "$ref": "#/components/responses/SubscriptionItemsListResponse"
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+},
+      "post": {
+  "summary": "Create a subscription item",
+  "operationId": "SubscriptionItems_Create",
+  "tags": [
+    "SubscriptionItems"
+  ],
+  "requestBody": {
+    "required": false,
+    "description": "",
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "subscription": {
+              "type": "string",
+              "description": "ID of the subscription to attach this subscription_item to"
+            },
+            "unit_amount": {
+              "type": "integer",
+              "description": "The unit amount in cents in the currency specified for the item"
+            },
+            "currency": {
+              "type": "string",
+              "description": "Currency ISO code. Must be the same than the related subscription's currency"
+            },
+            "description": {
+              "type": "string",
+              "description": "Text describing the item, that will appear on invoice lines"
+            },
+            "automatic_tax": {
+              "type": "boolean",
+              "default": true,
+              "description": "Boolean representing whether tax should be calculated automatically at each subscription renewal."
+            },
+            "declare_in_region": {
+              "type": "string",
+              "description": "If `automatic_tax=false`, the jurisdiction where tax is owed. It is often the EU country or the US state code"
+            },
+            "detailed_description": {
+              "type": "string"
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "description": "Set of key-value pairs that you can attach to an object"
+            },
+            "product_type": {
+              "type": "string",
+              "description": "Code of the product type the item refers to"
+            },
+            "tax_calculation": {
+              "type": "string",
+              "enum": [
+                "inclusive",
+                "exclusive"
+              ],
+              "description": "Decide if item amounts are considered as tax inclusive or tax exclusive. Mandatory if `automatic_tax=true` or `tax_rate` is filled"
+            },
+            "tax": {
+              "type": "string",
+              "example": "eu-vat",
+              "description": "If `automatic_tax=false`, the ID of the `tax` object that should be applied to the given item. Leave blank if no tax should apply"
+            },
+            "tax_rate": {
+              "type": "number",
+              "format": "float",
+              "description": "If `automatic_tax=false`, the percentage of tax that should be applied to the given item. Leave blank if no tax should apply. Can be set to `0` if, for instance, reverse charge applies"
+            },
+            "quantity": {
+              "type": "integer",
+              "description": "The quantity of items of this type that are sold in the given subscription"
+            }
+          },
+          "required": [
+            "subscription",
+            "unit_amount",
+            "currency",
+            "description"
+          ]
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/subscription_item"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+}
+    },
+    "/subscription_items/{id}": {
+      "get": {
+  "summary": "Retrieve a single SubscriptionItem",
+  "operationId": "SubscriptionItems_Show",
+  "tags": [
+    "SubscriptionItems"
+  ],
+  "description": "Returns a single SubscriptionItem by its ID.",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/subscription_item"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+},
+      "patch": {
+  "summary": "Update a subscription item",
+  "operationId": "SubscriptionItems_Update",
+  "tags": [
+    "SubscriptionItems"
+  ],
+  "description": "Updates a subscription item by its ID. Only few parameters can be changed, if you need to change the billing logic (tax calculation, product type), create a new item and delete the existing one instead",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "requestBody": {
+    "required": false,
+    "description": "",
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "description": "Text describing the item, that will appear on invoice lines"
+            },
+            "detailed_description": {
+              "type": "string"
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "description": "Set of key-value pairs that you can attach to an object"
+            },
+            "quantity": {
+              "type": "integer",
+              "description": "The quantity of items of this type that are sold in the given subscription"
+            },
+            "unit_amount": {
+              "type": "integer",
+              "description": "The unit amount in cents in the currency specified for the item"
+            }
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/subscription_item"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+},
+      "put": {
+  "summary": "Update a subscription item",
+  "operationId": "SubscriptionItems_Update",
+  "tags": [
+    "SubscriptionItems"
+  ],
+  "description": "Updates a subscription item by its ID. Only few parameters can be changed, if you need to change the billing logic (tax calculation, product type), create a new item and delete the existing one instead",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "requestBody": {
+    "required": false,
+    "description": "",
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "description": "Text describing the item, that will appear on invoice lines"
+            },
+            "detailed_description": {
+              "type": "string"
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "description": "Set of key-value pairs that you can attach to an object"
+            },
+            "quantity": {
+              "type": "integer",
+              "description": "The quantity of items of this type that are sold in the given subscription"
+            },
+            "unit_amount": {
+              "type": "integer",
+              "description": "The unit amount in cents in the currency specified for the item"
+            }
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/subscription_item"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+},
+      "delete": {
+  "summary": "Delete a SubscriptionItem",
+  "operationId": "SubscriptionItems_Destroy",
+  "tags": [
+    "SubscriptionItems"
+  ],
+  "description": "Deletes a SubscriptionItem from the subscription from its ID. You can't delete the last item of a subscription. Deleting an item does not cancel the subscription itself",
+  "parameters": [
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "responses": {
+    "200": {
+      "description": "success",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/deleted_subscription_item"
+          }
+        }
+      }
+    },
+    "default": {
+      "$ref": "#/components/responses/ErrorResponse"
+    }
+  }
+}
+    },
     "/subscriptions": {
       "get": {
   "summary": "List Subscriptions",
@@ -7425,7 +7930,80 @@
             },
             "currency": {
               "type": "string",
-              "description": "Currency ISO code. Must be the same than the related subscription's currency"
+              "description": "Currency ISO code."
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "unit_amount": {
+                    "type": "integer",
+                    "description": "The unit amount in cents in the currency specified for the item"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "Currency ISO code. Must be the same than the related subscription's currency"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Text describing the item, that will appear on invoice lines"
+                  },
+                  "automatic_tax": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Boolean representing whether tax should be calculated automatically at each subscription renewal."
+                  },
+                  "declare_in_region": {
+                    "type": "string",
+                    "description": "If `automatic_tax=false`, the jurisdiction where tax is owed. It is often the EU country or the US state code"
+                  },
+                  "detailed_description": {
+                    "type": "string"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "properties": {
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "Set of key-value pairs that you can attach to an object"
+                  },
+                  "product_type": {
+                    "type": "string",
+                    "description": "Code of the product type the item refers to"
+                  },
+                  "tax_calculation": {
+                    "type": "string",
+                    "enum": [
+                      "inclusive",
+                      "exclusive"
+                    ],
+                    "description": "Decide if item amounts are considered as tax inclusive or tax exclusive. Mandatory if `automatic_tax=true` or `tax_rate` is filled"
+                  },
+                  "tax": {
+                    "type": "string",
+                    "example": "eu-vat",
+                    "description": "If `automatic_tax=false`, the ID of the `tax` object that should be applied to the given item. Leave blank if no tax should apply"
+                  },
+                  "tax_rate": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "If `automatic_tax=false`, the percentage of tax that should be applied to the given item. Leave blank if no tax should apply. Can be set to `0` if, for instance, reverse charge applies"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "description": "The quantity of items of this type that are sold in the given subscription"
+                  }
+                },
+                "required": [
+                  "unit_amount",
+                  "currency",
+                  "description"
+                ]
+              },
+              "description": "A list of subscription items. Mandatory if `type=send_invoice`"
             },
             "interval": {
               "type": "string",
@@ -7439,13 +8017,33 @@
             "type": {
               "type": "string",
               "enum": [
-                "sum_usage"
+                "sum_usage",
+                "send_invoice"
               ],
               "description": "The type of the subscription, designing how the invoice amounts are calculated"
             },
             "description": {
               "type": "string",
               "description": "Description of the subscription, might be the products/services sold."
+            },
+            "interval_count": {
+              "type": "integer",
+              "default": 1,
+              "description": "The number of intervals between subscription billings. For example, interval=month and interval_count=3 bills every 3 months"
+            },
+            "invoice_settings": {
+              "type": "object",
+              "properties": {
+                "document_template": {
+                  "type": "string",
+                  "description": "The ID of the DocumentTemplate, invoices generated by this subscription should relate to. Use the default one if left blank"
+                },
+                "invoice_numbering_sequence": {
+                  "type": "string",
+                  "description": "The ID of the InvoiceNumberingSequence, invoices generated by this subscription should relate to. Use the default one if left blank"
+                }
+              },
+              "description": "If `type=send_invoice`, the invoice settings for this subscription"
             },
             "metadata": {
               "type": "object",
@@ -7455,6 +8053,13 @@
                 }
               },
               "description": "Set of key-value pairs that you can attach to an object"
+            },
+            "payment_recipients": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Array of `payment recipient` IDs that are accepted to pay invoices generated for this subscription. Only present if `type=send_invoice`"
             },
             "sources": {
               "type": "array",
@@ -7547,16 +8152,6 @@
   ],
   "description": "Delete a Subscription by its ID.",
   "parameters": [
-    {
-      "name": "subscription_id",
-      "in": "query",
-      "required": false,
-      "schema": {
-        "type": "string",
-        "description": "The ID the subscription to delete"
-      },
-      "description": "The ID the subscription to delete"
-    },
     {
       "name": "id",
       "in": "query",
@@ -9152,7 +9747,7 @@
                 "au_abn",
                 "ca_qst",
                 "ch_vat",
-                "gb_vat",
+                "eu_vat",
                 "eu_vat",
                 "hk_br",
                 "in_gst",
@@ -9265,7 +9860,7 @@
                 "au_abn",
                 "ca_qst",
                 "ch_vat",
-                "gb_vat",
+                "eu_vat",
                 "eu_vat",
                 "hk_br",
                 "in_gst",
@@ -9338,7 +9933,7 @@
                 "au_abn",
                 "ca_qst",
                 "ch_vat",
-                "gb_vat",
+                "eu_vat",
                 "eu_vat",
                 "hk_br",
                 "in_gst",
@@ -12285,6 +12880,99 @@
           }
         }
       },
+      "subscription_item": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "enum": [
+              "subscription_item"
+            ],
+            "description": "String representing the object type"
+          },
+          "livemode": {
+            "type": "boolean"
+          },
+          "automatic_tax": {
+            "type": "boolean",
+            "default": true,
+            "description": "Boolean representing whether tax should be calculated automatically at each subscription renewal."
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency ISO code. Must be the same than the related subscription's currency"
+          },
+          "declare_in_region": {
+            "type": "string",
+            "description": "If `automatic_tax=false`, the jurisdiction where tax is owed. It is often the EU country or the US state code"
+          },
+          "description": {
+            "type": "string",
+            "description": "Text describing the item, that will appear on invoice lines"
+          },
+          "detailed_description": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "description": "Set of key-value pairs that you can attach to an object"
+          },
+          "product_type": {
+            "type": "string",
+            "description": "Code of the product type the item refers to"
+          },
+          "tax_calculation": {
+            "type": "string",
+            "enum": [
+              "inclusive",
+              "exclusive"
+            ],
+            "description": "Decide if item amounts are considered as tax inclusive or tax exclusive. Mandatory if `automatic_tax=true` or `tax_rate` is filled"
+          },
+          "tax": {
+            "type": "string",
+            "example": "eu-vat",
+            "description": "If `automatic_tax=false`, the ID of the `tax` object that should be applied to the given item. `null` if no tax should apply"
+          },
+          "tax_rate": {
+            "type": "number",
+            "format": "float",
+            "description": "If `automatic_tax=false`, the percentage of tax that should be applied to the given item. `null` if no tax should apply. Can be set to `0` if, for instance, reverse charge applies"
+          },
+          "subscription": {
+            "type": "string",
+            "description": "The ID of the `subscription` this item refers to"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "The quantity of items of this type that are sold in the given subscription"
+          },
+          "unit_amount": {
+            "type": "integer",
+            "description": "The unit amount in cents in the currency specified for the item"
+          }
+        }
+      },
+      "deleted_subscription_item": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "deleted": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
       "subscription": {
         "type": "object",
         "properties": {
@@ -12332,6 +13020,51 @@
             ],
             "description": "The recurring interval of when an invoice must be generated"
           },
+          "interval_count": {
+            "type": "integer",
+            "default": 1,
+            "description": "The number of intervals between subscription billings. For example, interval=month and interval_count=3 bills every 3 months"
+          },
+          "invoice_settings": {
+            "type": "object",
+            "properties": {
+              "document_template": {
+                "type": "string",
+                "description": "The ID of the DocumentTemplate, invoices generated by this subscription should relate to. Use the default one if left blank"
+              },
+              "invoice_numbering_sequence": {
+                "type": "string",
+                "description": "The ID of the InvoiceNumberingSequence, invoices generated by this subscription should relate to. Use the default one if left blank"
+              }
+            },
+            "description": "If `type=send_invoice`, the invoice settings for this subscription"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/subscription_item"
+                  }
+                },
+                "has_more": {
+                  "type": "boolean",
+                  "description": "True if this list has another page of items after this one that can be fetched"
+                },
+                "object": {
+                  "type": "string",
+                  "enum": [
+                    "list"
+                  ],
+                  "description": "String representing the object type"
+                }
+              }
+            },
+            "description": "A list of subscription items. Null if `type=sum_usage`"
+          },
           "metadata": {
             "type": "object",
             "properties": {
@@ -12341,10 +13074,18 @@
             },
             "description": "Set of key-value pairs that you can attach to an object"
           },
+          "payment_recipients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of `payment recipient` IDs that are accepted to pay invoices generated for this subscription. Only present if `type=send_invoice`"
+          },
           "type": {
             "type": "string",
             "enum": [
-              "sum_usage"
+              "sum_usage",
+              "send_invoice"
             ],
             "description": "The type of the subscription, designing how the invoice amounts are calculated"
           },
@@ -12884,7 +13625,7 @@
               "au_abn",
               "ca_qst",
               "ch_vat",
-              "gb_vat",
+              "eu_vat",
               "eu_vat",
               "hk_br",
               "in_gst",
@@ -13345,6 +14086,34 @@
             ],
             "description": "Whether Beanie should collect the full billing address or not"
           },
+          "shipping_address_collection": {
+            "type": "object",
+            "properties": {
+              "allowed_countries": {
+                "type": "array",
+                "example": [
+                  "FR",
+                  "DE",
+                  "US",
+                  "CA"
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "description": "An explicit list of ISO3166-alpha2 codes of countries where you allow shipping"
+              }
+            },
+            "description": "Whether Beanie should collect the shipping address of the order, and describes the countries you will allow shipping"
+          },
+          "company_details_collection": {
+            "type": "string",
+            "default": "optional",
+            "enum": [
+              "optional",
+              "never"
+            ],
+            "description": "Whether Beanie asks for company details (Tax number / Company name)"
+          },
           "phone_number_collection": {
             "type": "boolean",
             "description": "Whether Beanie should collect the phone number or not"
@@ -13555,6 +14324,34 @@
               "auto"
             ],
             "description": "Whether Beanie should collect the full billing address or not"
+          },
+          "shipping_address_collection": {
+            "type": "object",
+            "properties": {
+              "allowed_countries": {
+                "type": "array",
+                "example": [
+                  "FR",
+                  "DE",
+                  "US",
+                  "CA"
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "description": "An explicit list of ISO3166-alpha2 codes of countries where you allow shipping"
+              }
+            },
+            "description": "Whether Beanie should collect the shipping address of the order, and describes the countries you will allow shipping. Leave blank to not collect shipping address."
+          },
+          "company_details_collection": {
+            "type": "string",
+            "default": "optional",
+            "enum": [
+              "optional",
+              "never"
+            ],
+            "description": "Whether Beanie asks for company details (Tax number / Company name)"
           },
           "phone_number_collection": {
             "type": "boolean",
@@ -14598,6 +15395,35 @@
           }
         }
       },
+      "SubscriptionItemsListResponse": {
+        "description": "success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/subscription_item"
+                  }
+                },
+                "has_more": {
+                  "type": "boolean",
+                  "description": "True if this list has another page of items after this one that can be fetched"
+                },
+                "object": {
+                  "type": "string",
+                  "enum": [
+                    "list"
+                  ],
+                  "description": "String representing the object type"
+                }
+              }
+            }
+          }
+        }
+      },
       "SubscriptionsListResponse": {
         "description": "success",
         "content": {
@@ -15070,6 +15896,7 @@
       "name": "Recurring API",
       "tags": [
         "Subscriptions",
+        "SubscriptionItems",
         "UsageItems"
       ]
     },
