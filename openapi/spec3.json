@@ -296,6 +296,17 @@
               "default": true,
               "description": "Whether Beanie should collect multiple evidence such as the IP address and the payment method issuer country to calculate tax."
             },
+            "prefill_settings": {
+              "type": "object",
+              "properties": {
+                "editable_fields": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Whether fields that are prefilled with `prefill_data` are editable or not"
+                }
+              },
+              "description": "Configuration of fields for which data is prefilled."
+            },
             "save_payment_method": {
               "type": "string",
               "default": "never",
@@ -510,6 +521,17 @@
               "default": true,
               "description": "Whether Beanie should collect multiple evidence such as the IP address and the payment method issuer country to calculate tax."
             },
+            "prefill_settings": {
+              "type": "object",
+              "properties": {
+                "editable_fields": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Whether fields that are prefilled with `prefill_data` are editable or not"
+                }
+              },
+              "description": "Configuration of fields for which data is prefilled."
+            },
             "save_payment_method": {
               "type": "string",
               "default": "never",
@@ -683,6 +705,17 @@
               "type": "boolean",
               "default": true,
               "description": "Whether Beanie should collect multiple evidence such as the IP address and the payment method issuer country to calculate tax."
+            },
+            "prefill_settings": {
+              "type": "object",
+              "properties": {
+                "editable_fields": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Whether fields that are prefilled with `prefill_data` are editable or not"
+                }
+              },
+              "description": "Configuration of fields for which data is prefilled."
             },
             "save_payment_method": {
               "type": "string",
@@ -955,6 +988,9 @@
             "prefill_data": {
               "type": "object",
               "properties": {
+                "customer_company_name": {
+                  "type": "string"
+                },
                 "customer_email": {
                   "type": "string"
                 },
@@ -963,6 +999,17 @@
                 }
               },
               "description": "Set of key-value pairs that you can attach to prefill the Beanie form fields"
+            },
+            "prefill_settings": {
+              "type": "object",
+              "properties": {
+                "editable_fields": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Whether fields that are prefilled with `prefill_data` are editable or not"
+                }
+              },
+              "description": "Configuration of fields for which data is prefilled."
             },
             "metadata": {
               "type": "object",
@@ -14126,6 +14173,17 @@
             "default": true,
             "description": "Whether Beanie should collect multiple evidence such as the IP address and the payment method issuer country to calculate tax."
           },
+          "prefill_settings": {
+            "type": "object",
+            "properties": {
+              "editable_fields": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether fields that are prefilled with `prefill_data` are editable or not"
+              }
+            },
+            "description": "Configuration of fields for which data is prefilled."
+          },
           "save_payment_method": {
             "type": "string",
             "default": "never",
@@ -14386,9 +14444,23 @@
               },
               "customer_name": {
                 "type": "string"
+              },
+              "customer_company_name": {
+                "type": "string"
               }
             },
             "description": "Set of key-value pairs that you can attach to prefill the Beanie form fields"
+          },
+          "prefill_settings": {
+            "type": "object",
+            "properties": {
+              "editable_fields": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether fields that are prefilled with `prefill_data` are editable or not"
+              }
+            },
+            "description": "Configuration of fields for which data is prefilled."
           },
           "metadata": {
             "type": "object",
