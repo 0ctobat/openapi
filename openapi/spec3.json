@@ -988,6 +988,22 @@
             "prefill_data": {
               "type": "object",
               "properties": {
+                "customer_billing_address_line1": {
+                  "type": "string"
+                },
+                "customer_billing_address_city": {
+                  "type": "string"
+                },
+                "customer_billing_address_zip": {
+                  "type": "string"
+                },
+                "customer_billing_address_state": {
+                  "type": "string"
+                },
+                "customer_billing_address_country": {
+                  "type": "string",
+                  "description": "Must be ISO3166-alpha2"
+                },
                 "customer_company_name": {
                   "type": "string"
                 },
@@ -995,6 +1011,9 @@
                   "type": "string"
                 },
                 "customer_name": {
+                  "type": "string"
+                },
+                "customer_tax_number": {
                   "type": "string"
                 }
               },
@@ -14439,6 +14458,22 @@
           "prefill_data": {
             "type": "object",
             "properties": {
+              "customer_billing_address_line1": {
+                "type": "string"
+              },
+              "customer_billing_address_city": {
+                "type": "string"
+              },
+              "customer_billing_address_zip": {
+                "type": "string"
+              },
+              "customer_billing_address_state": {
+                "type": "string"
+              },
+              "customer_billing_address_country": {
+                "type": "string",
+                "description": "Must be ISO3166-alpha2"
+              },
               "customer_email": {
                 "type": "string"
               },
@@ -14446,6 +14481,9 @@
                 "type": "string"
               },
               "customer_company_name": {
+                "type": "string"
+              },
+              "customer_tax_number": {
                 "type": "string"
               }
             },
