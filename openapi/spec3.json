@@ -45,7 +45,7 @@
     {
       "name": "Expandable objects",
       "x-traitTag": true,
-      "description": "Many objects can be nested into their parent object in their response properties. Those objects can be expanded inline with the expand request parameter. Objects that can be expanded are noted in this documentation.\nThis parameter is available on all API requests, and applies to the response of that request only. For example, requesting invoices on a customer will add the customer’s invoices list as a property into a full customer object, and will then expand the invoices properties on that customer into a full list object.\n```curl\n# Example request\n$ curl https://apiv2.octobat.com/customers?expand[]=invoices \\\n   -u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt:\n```\n```ruby\n# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\nOctobat::Customer.all(expand: ['invoices'])\n```"
+      "description": "Many objects can be nested into their parent object in their response properties. Those objects can be expanded inline with the expand request parameter. Objects that can be expanded are noted in this documentation.\nThis parameter is available on all API requests, and applies to the response of that request only. For example, requesting customer on an invoice object will add the full customer’s full object as a property into a full invoice object.\n```curl\n# Example request\n$ curl https://apiv2.octobat.com/invoices?expand[]=customer \\\n   -u oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt:\n```\n```ruby\n# Example request\nrequire \"octobat\"\nOctobat.api_key = \"oc_test_skey_tkHCYYOUVrYyY5rBFZxNzgtt\"\nOctobat::Invoice.all(expand: ['customer'])\n```"
     },
     {
       "name": "Idempotent requests",
@@ -3625,7 +3625,9 @@
         "type": "string",
         "enum": [
           "paid",
-          "unpaid"
+          "unpaid",
+          "uncollectible",
+          "disputed"
         ],
         "description": "A filter on the list based on the `payment_status` value. `unpaid` returns partially paid and totally unpaid invoices"
       },
@@ -9830,6 +9832,10 @@
               "type": "string",
               "description": "Name of the product / service sold."
             },
+            "is_refund": {
+              "type": "boolean",
+              "description": "`true` if it refers to a refund, `false` elsewhere"
+            },
             "metadata": {
               "type": "object",
               "properties": {
@@ -9838,6 +9844,10 @@
                 }
               },
               "description": "Set of key-value pairs that you can attach to an object"
+            },
+            "refunding_usage_item": {
+              "type": "string",
+              "description": "The ID of the `usage_item` this object represents the refund to"
             },
             "sources": {
               "type": "array",
@@ -13466,7 +13476,7 @@
             "example": "FR",
             "description": "Must be an ISO alpha-2 code"
           },
-          "customer_address_country_code": {
+          "customer_country_code": {
             "type": "string",
             "description": "deprecated"
           },
@@ -13638,7 +13648,8 @@
               "unpaid",
               "partial",
               "paid",
-              "uncollectible"
+              "uncollectible",
+              "disputed"
             ],
             "description": "A string representing whether the invoice is paid or not"
           },
@@ -15670,6 +15681,11 @@
             "example": "eu-vat",
             "description": "String representing the tax code"
           },
+          "description": {
+            "type": "string",
+            "example": "EU VAT",
+            "description": "String describing the tax object"
+          },
           "name": {
             "type": "string",
             "example": "VAT",
@@ -15725,6 +15741,9 @@
           "customer": {
             "type": "string",
             "description": "ID of the customer this transaction refers to"
+          },
+          "disputed": {
+            "type": "boolean"
           },
           "flow_type": {
             "type": "string",
@@ -15810,7 +15829,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "The purchase item ID"
+            "description": "The usage item ID"
           },
           "object": {
             "type": "string",
@@ -15835,6 +15854,10 @@
             "type": "string",
             "description": "The object ID of the Item this usage item has been aggregated in"
           },
+          "is_refund": {
+            "type": "boolean",
+            "description": "`true` if it refers to a refund, `false` elsewhere"
+          },
           "metadata": {
             "type": "object",
             "properties": {
@@ -15843,6 +15866,10 @@
               }
             },
             "description": "Set of key-value pairs that you can attach to an object"
+          },
+          "refunding_usage_item": {
+            "type": "string",
+            "description": "The ID of the `usage_item` this object represents the refund to"
           },
           "sources": {
             "type": "array",
